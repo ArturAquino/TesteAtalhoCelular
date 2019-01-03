@@ -3,7 +3,6 @@ var MyCacheName = 'v1:static';
 
 // during the install phase you usually want to cache static assets
 self.addEventListener('install', function (e) {
-    console.log('self: ', self)
     // once the SW is installed, go ahead and fetch the resources to make this work offline
     e.waitUntil(
         caches.open(MyCacheName).then(function (cache) {
