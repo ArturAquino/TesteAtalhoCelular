@@ -3,6 +3,7 @@ var MyCacheName = 'v1:static';
 
 // during the install phase you usually want to cache static assets
 self.addEventListener('install', function (e) {
+    console.log('self: ', self)
     // once the SW is installed, go ahead and fetch the resources to make this work offline
     e.waitUntil(
         caches.open(MyCacheName).then(function (cache) {
@@ -46,20 +47,19 @@ self.addEventListener('fetch', function (event) {
     );
 });
 
-self.addEventListener('beforeinstallprompt', function (e) {
+self.addEventListener('beforeinstallprompt', function (event) {
     // beforeinstallprompt Event fired
+
+    console.log('Dados do Event: ', event)
 
     // e.userChoice will return a Promise.
     // For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
-    e.userChoice.then(function (choiceResult) {
+    // event.userChoice.then(function (choiceResult) {
 
-        console.log(choiceResult.outcome);
+    //     console.log(choiceResult.outcome);
 
-        if (choiceResult.outcome == 'dismissed') {
-            console.log('User cancelled home screen install');
-        }
-        else {
-            console.log('User added to home screen');
-        }
-    });
+    //     choiceResult.outcome === 'dismissed' ?
+    //         console.log('User cancelled home screen install') :
+    //         console.log('User added to home screen');
+    // });
 });
