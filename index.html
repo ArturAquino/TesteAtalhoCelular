@@ -1,55 +1,105 @@
 <!DOCTYPE html public "display of affection from creativejs">
-  <head>
-    <!-- <meta charset="uft-8" /> -->
-    <meta name="theme-color" content="#536878" />
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <title>Fireworks!</title>
-    <link href="css/fireworks.css" rel="stylesheet">
-    <link rel="manifest" href="./manifest.json">
-  </head>
-  <!--
-  I love including these comments in pages. It pleases me that
-  you're reading them as well. It's like we're having a moment.
-  We are. Anyway, the CreativeJS team though Fireworks would
-  be teh r0xx0rz and I volunteered to give this a shot. So
-  I hope you're enjoying them and doing the "Aaah! Oooh!"
-  thing. If not I'm a bit upset, but I'll let it slide.
+	<head>
+		<!-- <meta charset="uft-8" /> -->
+		<meta name="theme-color" content="#536878" />
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<title>Fireworks!</title>
+		<link href="css/fireworks.css" rel="stylesheet">
+		<link rel="manifest" href="./manifest.json">
+	</head>
+	<!--
+	I love including these comments in pages. It pleases me that
+	you're reading them as well. It's like we're having a moment.
+	We are. Anyway, the CreativeJS team though Fireworks would
+	be teh r0xx0rz and I volunteered to give this a shot. So
+	I hope you're enjoying them and doing the "Aaah! Oooh!"
+	thing. If not I'm a bit upset, but I'll let it slide.
 
-  Also, big shoutz to Paul Irish for the rAF shimidimmydoo.
+	Also, big shoutz to Paul Irish for the rAF shimidimmydoo.
 
-  Paul | aerotwist
-  -->
-  <body>
+	Paul | aerotwist
+	-->
+	<body>
 
-    <!-- Hiding library elements in the DOM is fun -->
-    <aside id="library">
-      <img src="images/nightsky.png" id="nightsky" />
-      <img src="images/big-glow.png" id="big-glow" />
-      <img src="images/small-glow.png" id="small-glow" />
-    </aside>
-    <main id="welcome-back" class="isPaused">
-      <h1>Welcome back!</h1>
-    </main>
-  </body>
-  <script src="js/requestanimframe.js"></script>
-  <script src="js/fireworks.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      	console.log("Will service worker register?");
-    	navigator.serviceWorker.register('./service-worker.js').then(function(reg){
-        console.log("Yes it did.");
-      }).catch(function(err) {
-        console.log("No it didn't. This happened: ", err)
-      });
-    }
+		<!-- Hiding library elements in the DOM is fun -->
+		<aside id="library">
+			<img src="images/nightsky.png" id="nightsky" />
+			<img src="images/big-glow.png" id="big-glow" />
+			<img src="images/small-glow.png" id="small-glow" />
+		</aside>
+		<main id="welcome-back" class="isPaused">
+			<h1>Welcome back!</h1>
+		</main>
+	</body>
+	<script src="js/requestanimframe.js"></script>
+	<script src="js/fireworks.js"></script>
+	<script>
+		if ('serviceWorker' in navigator) {
+				console.log("Will service worker register?");
+			navigator.serviceWorker.register('./service-worker.js').then(function(reg){
+				console.log("Yes it did.");
+			}).catch(function(err) {
+				console.log("No it didn't. This happened: ", err)
+			});
+		}
 
-    // link to a image file
-      var iconUrl = 'https://www.seeklogo.net/wp-content/uploads/2014/10/Google-Chrome-logo-vector-download.png';
+		// link to a image file
+		var iconUrl = 'https://www.seeklogo.net/wp-content/uploads/2014/10/Google-Chrome-logo-vector-download.png';
 
-      // create the <img> html element
-      // on first load it will request the image
-      // second time it will load it from cache directly thanks to the service worker
-      var imgElement = document.createElement('img');
-      imgElement.src = iconUrl;
-  </script>
+		// create the <img> html element
+		// on first load it will request the image
+		// second time it will load it from cache directly thanks to the service worker
+		var imgElement = document.createElement('img');
+		imgElement.src = iconUrl;
+
+		var deferredPrompt;
+		
+		window.addEventListener('beforeinstallprompt', function (event) {
+			// beforeinstallprompt Event fired
+
+			console.log('Dados do Event: ', event)
+
+			// e.userChoice will return a Promise.
+			// For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
+			// event.userChoice.then(function (choiceResult) {
+
+			// 		console.log(choiceResult.outcome);
+
+			// 		choiceResult.outcome === 'dismissed' ?
+			// 				console.log('User cancelled home screen install') :
+			// 				console.log('User added to home screen');
+			// });
+			e.preventDefault();
+			// Stash the event so it can be triggered later.
+			deferredPrompt = e;
+
+			showAddToHomeScreen();
+		});
+
+		function showAddToHomeScreen() {
+			var a2hsBtn = document.querySelector(".ad2hs-prompt");
+			a2hsBtn.style.display = "block";
+			a2hsBtn.addEventListener("click", addToHomeScreen);
+		}
+
+		
+		function addToHomeScreen() {
+			var a2hsBtn = document.querySelector(".ad2hs-prompt");  // hide our user interface that shows our A2HS button
+			a2hsBtn.style.display = 'none';  // Show the prompt
+			deferredPrompt.prompt();  // Wait for the user to respond to the prompt
+			deferredPrompt.userChoice
+				.then(function (choiceResult) {
+
+					if (choiceResult.outcome === 'accepted') {
+						console.log('User accepted the A2HS prompt');
+					} else {
+						console.log('User dismissed the A2HS prompt');
+					}
+
+					deferredPrompt = null;
+
+				});
+		}
+
+	</script>
 </html>

@@ -45,20 +45,3 @@ self.addEventListener('fetch', function (event) {
         })
     );
 });
-
-self.addEventListener('beforeinstallprompt', function (event) {
-    // beforeinstallprompt Event fired
-
-    console.log('Dados do Event: ', event)
-
-    // e.userChoice will return a Promise.
-    // For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
-    // event.userChoice.then(function (choiceResult) {
-
-    //     console.log(choiceResult.outcome);
-
-    //     choiceResult.outcome === 'dismissed' ?
-    //         console.log('User cancelled home screen install') :
-    //         console.log('User added to home screen');
-    // });
-});
