@@ -30,7 +30,7 @@
 		<main id="welcome-back" class="isPaused">
 			<h1>Welcome back!</h1>
 		</main>
-		<button onclick="addToHomeScreen()">teste de instalação</button>
+		<button onclick="showAddToHomeScreen()">teste de instalação</button>
 	</body>
 	<script src="js/requestanimframe.js"></script>
 	<script src="js/fireworks.js"></script>
@@ -58,8 +58,6 @@
 		window.addEventListener('beforeinstallprompt', function (event) {
 			// beforeinstallprompt Event fired
 
-			console.log('Dados do Event: ', event)
-
 			// e.userChoice will return a Promise.
 			// For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
 			// event.userChoice.then(function (choiceResult) {
@@ -74,7 +72,7 @@
 			// Stash the event so it can be triggered later.
 			deferredPrompt = e;
 
-			showAddToHomeScreen();
+			// showAddToHomeScreen();
 		});
 
 		function showAddToHomeScreen() {
