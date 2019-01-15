@@ -9,7 +9,8 @@ self.addEventListener('install', function (e) {
             return cache.addAll([
                 './',
                 './css/fireworks.css',
-                './index.html'
+                './index.html',
+                './js/application.js'
             ]).then(function () {
                 self.skipWaiting();
             });

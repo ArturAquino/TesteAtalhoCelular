@@ -30,10 +30,14 @@
 		<main id="welcome-back" class="isPaused">
 			<h1>Welcome back!</h1>
 		</main>
-		<button onclick="showAddToHomeScreen()">teste de instalação</button>
+		<div class="ad2hs-prompt bounceInUp">
+			<h1>Add Fireworks! To Your Homescreen!</h1>
+			<div class="btn btn-premium">Add</div>
+		</div>
 	</body>
 	<script src="js/requestanimframe.js"></script>
 	<script src="js/fireworks.js"></script>
+	<script src="js/application.js" defer></script>
 	<script>
 		if ('serviceWorker' in navigator) {
 				console.log("Will service worker register?");
@@ -43,64 +47,5 @@
 				console.log("No it didn't. This happened: ", err)
 			});
 		}
-
-		// link to a image file
-		var iconUrl = 'https://www.seeklogo.net/wp-content/uploads/2014/10/Google-Chrome-logo-vector-download.png';
-
-		// create the <img> html element
-		// on first load it will request the image
-		// second time it will load it from cache directly thanks to the service worker
-		var imgElement = document.createElement('img');
-		imgElement.src = iconUrl;
-
-		var deferredPrompt;
-		
-		window.addEventListener('beforeinstallprompt', function (event) {
-			// beforeinstallprompt Event fired
-
-			// e.userChoice will return a Promise.
-			// For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
-			// event.userChoice.then(function (choiceResult) {
-
-			// 		console.log(choiceResult.outcome);
-
-			// 		choiceResult.outcome === 'dismissed' ?
-			// 				console.log('User cancelled home screen install') :
-			// 				console.log('User added to home screen');
-			// });
-			event.preventDefault();
-			// Stash the event so it can be triggered later.
-			deferredPrompt = event;
-
-			// showAddToHomeScreen();
-		});
-
-		function showAddToHomeScreen() {
-			var a2hsBtn = document.querySelector(".ad2hs-prompt");
-			a2hsBtn.style.display = "block";
-			a2hsBtn.addEventListener("click", addToHomeScreen);
-		}
-
-		
-		function addToHomeScreen() {
-			var a2hsBtn = document.querySelector(".ad2hs-prompt");  // hide our user interface that shows our A2HS button
-			a2hsBtn.style.display = 'none';  // Show the prompt
-			deferredPrompt.prompt();  // Wait for the user to respond to the prompt
-			deferredPrompt.userChoice
-				.then(function (choiceResult) {
-
-					if (choiceResult.outcome === 'accepted') {
-						console.log('User accepted the A2HS prompt');
-					} else {
-						console.log('User dismissed the A2HS prompt');
-					}
-
-					deferredPrompt = null;
-
-				});
-		}
-
-		showAddToHomeScreen();
-
 	</script>
 </html>
