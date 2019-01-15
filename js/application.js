@@ -16,7 +16,7 @@
 
 function showAddToHomeScreen() {
 
-  var a2hsBtn = document.querySelector(".ad2hs-prompt");
+  var a2hsBtn = document.getElementById("ad2hs-prompt");
 
   a2hsBtn.style.display = "flex";
 
@@ -26,7 +26,7 @@ function showAddToHomeScreen() {
 
   function addToHomeScreen() {
 
-    var a2hsBtn = document.querySelector(".ad2hs-prompt");
+    var a2hsBtn = document.getElementById("ad2hs-prompt");
 
     // hide our user interface that shows our A2HS button
     a2hsBtn.style.display = 'none';
