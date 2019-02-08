@@ -13,7 +13,7 @@
 
 	
 	function isInStandaloneMode () {
-		retunr ('standalone' in window.navigator) && (window.navigator.standalone);
+		return ('standalone' in window.navigator) && (window.navigator.standalone);
 	}
 	
 
@@ -33,7 +33,6 @@
 		var a2hsBtn = document.getElementById("ad2hs");
 		a2hsBtn.style.display = "flex";
 		a2hsBtn.addEventListener("click", addToHomeScreen);
-		window.alert('Sucesso!!!');
 	}
 
 	function addToHomeScreen() {
@@ -59,7 +58,7 @@
 
 			});
 		} else if (isInStandaloneMode() && isIos()) {
-			window.alert('Sucesso!!!');
+			window.alert('Sucesso: ', isInStandaloneMode(), isIos());
 		}
 	}
 
