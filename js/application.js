@@ -3,12 +3,26 @@
 	(() => {
 
 	var deferredPrompt;
+	var userAgent;
+
+	function isIos () {
+		// const userAgent = window.navigator.userAgent.toLocaleLowerCase();
+		console.log('Valor: ', userAgent);
+		return /iphone|ipad|ipod/.test(userAgent);
+	}
+
+	
+	function isInStandaloneMode () {
+		retunr ('standalone' in window.navigator) && (window.navigator.standalone);
+	}
+	
 
 	window.addEventListener('beforeinstallprompt', function (e) {
 		// Prevent Chrome 67 and earlier from automatically showing the prompt
 		e.preventDefault();
 		// Stash the event so it can be triggered later.
 		deferredPrompt = e;
+		userAgent = window.navigator.userAgent.toLocaleLowerCase();
 
 		showAddToHomeScreen();
 
@@ -23,7 +37,7 @@
 
 	function addToHomeScreen() {
 
-		if (deferredPrompt) {
+		if (deferredPrompt && !isIos()) {
 			// Show the prompt
 			deferredPrompt.prompt();
 
@@ -43,6 +57,8 @@
 				deferredPrompt = null;
 
 			});
+		} else if (isInStandaloneMode() && isIos()) {
+			window.alert('Sucesso!!!');
 		}
 	}
 
