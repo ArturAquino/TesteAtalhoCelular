@@ -39,10 +39,6 @@
 	<script src="js/fireworks.js"></script>
 	<script src="js/application.js" defer></script>
 	<script>
-		function needsToSeePrompt() {
-			return ['iPhone', 'iPad', 'iPod'].includes(navigator.platform);
-		}
-
 		if ('serviceWorker' in navigator) {
 				console.log("Will service worker register?");
 			this.needsToSeePrompt();
