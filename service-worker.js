@@ -5,14 +5,15 @@ var MyCacheName = 'v1:static';
 self.addEventListener('install', function (e) {
     // once the SW is installed, go ahead and fetch the resources to make this work offline
     e.waitUntil(
-        caches.open(MyCacheName).then(function (cache) {
-            return cache.addAll([
-                './',
-                './css/fireworks.css',
-                './index.html',
-                './js/application.js'
-            ]).then(function () {
-                self.skipWaiting();
+        caches.open(MyCacheName)
+            .then(function (cache) {
+                return cache.addAll([
+                    './',
+                    './css/fireworks.css',
+                    './index.html',
+                    // './js/application.js'
+                ]).then(function () {
+                    self.skipWaiting();
             });
         })
     );
